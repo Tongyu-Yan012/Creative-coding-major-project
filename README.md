@@ -1,5 +1,3 @@
-# The Scream
-![an image of the scream](readmeImages/the-scream.jpg)
 // Add new image of apple tree
 # Anwar Jalal Shemza Apple Tree
 ![an image of the scream](readmeImages/Anwar%20Jalal%20Shemza%20Apple%20Tree.jpeg)
