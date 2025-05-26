@@ -45,5 +45,11 @@
 > > > > > > > 60a96cb46abc2b11374f0df3d939dff4e238f5d7
 
 ### Apples are scattered.
-![an Inspiration image](readmeImages/IMAGE02.jpg)
+
+![an Inspiration image](readmeImages/IMAGE02.jpg)<br />
 This picture is very similar to the style we chose. The fruits or leaves are all composed of circles. The circles in the second picture present a kind of drifting action. I think in our works, we can try to make natural actions such as apples falling and rolling.
+
+### Present the state of plants with different colors
+
+![an inspiration image](readmeImages/TreeOfLife.jpg)<br />
+This picture uses different color blocks to represent the changes throughout a tree's life, so I think we can also use different color blocks to represent the life of an apple tree
