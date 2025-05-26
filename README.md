@@ -57,6 +57,6 @@ This picture uses different color blocks to represent the changes throughout a t
 ![an inspiration image](readmeImages/Variation_on_the_Hexagon.jpg)
 This work by Iranian mirror mosaic artist Monir Shahroudy Farmanfarmaian consists of abstract geometric compositions fused with traditional Persian design structures, which is similar to our chosen artwork, Shemza's Apple Trees, as Shemza also combines Islamic calligraphic structures with geometric compositions, and the polygons and circles expressed by Monir are also similar in meaning and are ideal for visual transformation. The polygonal shape of the monir is also similar to the circle, making it a perfect visual translation.
 ### 
-![an inspiration image](si-471053.jpg_ihcm-50.00_iwcm-50.00_fls-880229L.tif_fts-880229T.tif_mc-ffffff_fwcm-1.60_tmwcm-5.00_bmwcm-5.00_lmwcm-5.00_rmwcm-5.00_maxdim-1000_en_easyart___iar-1.jpg)
-![an inspiration image](1970.55_ph_web.png)
+![an inspiration image](readmeImages/Bauhaus_2.jpg)
+![an inspiration image](readmeImages/1970.55_ph_web.jpg)
 The flat abstract style of Bauhaus is very similar to the works we have chosen, allowing for the creation of dispersed interactions of shapes and lines
