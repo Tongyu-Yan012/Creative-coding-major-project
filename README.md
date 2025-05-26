@@ -53,3 +53,6 @@ This picture is very similar to the style we chose. The fruits or leaves are all
 
 ![an inspiration image](readmeImages/TreeOfLife.jpg)<br />
 This picture uses different color blocks to represent the changes throughout a tree's life, so I think we can also use different color blocks to represent the life of an apple tree
+### Apple-shaped variant
+![an inspiration image](tcAAlZc9q3qYQslGsrDGt9TQcsOk52WHDEucbn61.jpg)<br />
+This work by Iranian mirror mosaic artist Monir Shahroudy Farmanfarmaian consists of abstract geometric compositions fused with traditional Persian design structures, which is similar to our chosen artwork, Shemza's Apple Trees, as Shemza also combines Islamic calligraphic structures with geometric compositions, and the polygons and circles expressed by Monir are also similar in meaning and are ideal for visual transformation. The polygonal shape of the monir is also similar to the circle, making it a perfect visual translation.
