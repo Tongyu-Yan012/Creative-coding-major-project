@@ -7,7 +7,7 @@ class Point {
 
   display() {
     noStroke();
-    fill(0);
+    fill(255);
     ellipse(this.x, this.y, this.r, this.r);
   }
 }
