@@ -24,10 +24,21 @@ const rawCoords = [
 let pointArray = [];
 
 // ground Array
-let groundPointArray = [];
+let groundPointArray = [
+  { x: 300, y: 595 },
+  { x: 246, y: 591 },
+  { x: 194, y: 589 },
+  { x: 351, y: 596 },
+  { x: 406, y: 595 },
+];
 
 // The first branch Arrary
-let firstBranchArray = [];
+let firstBranchArray = [
+  { x: 306, y: 557 },
+  { x: 304, y: 526 },
+  { x: 304, y: 490 },
+  { x: 306, y: 411 },
+  { x: 307, y: 329 },];
 
 // The first left Branch
 let leftBranch = [{ x: 127, y: 84 },{ x: 181, y: 258 },{ x: 182, y: 212 }, { x: 131, y: 136 },  { x: 135, y: 174 },  { x: 188, y: 172 }, { x: 180, y: 327 },  { x: 239, y: 328 },  { x: 278, y: 329 }];
@@ -36,10 +47,17 @@ let leftBranch = [{ x: 127, y: 84 },{ x: 181, y: 258 },{ x: 182, y: 212 }, { x: 
 let rightBranch = [{ x: 348, y: 329 },  { x: 384, y: 333 },  { x: 421, y: 333 },  { x: 427, y: 272 },  { x: 429, y: 239 },  { x: 434, y: 183 },  { x: 434, y: 154 },  { x: 461, y: 159 },  { x: 504, y: 172 },  { x: 534, y: 183 },  { x: 539, y: 142 }];
 
 // The second up branch Array
-let secondUpBranch = [];
+let secondUpBranch = [
+  { x: 309, y: 314 },
+  { x: 313, y: 289 },
+  { x: 314, y: 246 },];
 
 // The second left branch
-let secondleftBranch = [];
+let secondleftBranch = [
+  { x: 270, y: 246 },
+  { x: 245, y: 244 },
+  { x: 268, y: 212 },
+];
 
 // The second Right Branch
 let secondRightBranch = [{ x: 360, y: 245 },  { x: 360, y: 216 }];
