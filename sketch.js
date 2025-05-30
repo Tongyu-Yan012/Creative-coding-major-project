@@ -2,7 +2,7 @@
 let groundPointArray = [new Point(300, 595), new Point(246,  591), new Point ( 194,  589), new Point  (351,  596), new Point  (406,  595) ];
 
 // The first branch Arrary
-let firstBranchArray = [new Point(300, 595), new Point ( 306,  557 ),new Point ( 304,  526),new Point  (304,  490 ),new Point  (306,  411),new Point  (307,  329 )];
+let firstBranchArray = [new Point ( 306,  557 ),new Point ( 304,  526),new Point  (304,  490 ),new Point  (306,  411),new Point  (307,  329 )];
 
 // The first left Branch
 let leftBranch = [new Point(127, 84), new Point(131, 136),  new Point(135, 174), new Point(188, 172), new Point(182, 212), new Point(181, 258),   new Point(180, 327),  new Point(239, 328),  new Point(278, 329), new Point  (307,  329 )];
@@ -89,6 +89,7 @@ function setup() {
     let branchLine =new Branch(p1, p2, `yellow`, 1)
     lineArray.push(branchLine)
   }
+  
 }
 
 function draw() {
@@ -102,6 +103,24 @@ function draw() {
 
   for (let i = 0;i < groundPointArray.length; i++) {
     groundPointArray[i].display()
+  }
+  for (let i = 0;i < firstBranchArray.length; i++) {
+    firstBranchArray[i].display()
+  }
+  for (let i = 0;i < secondUpBranch.length; i++) {
+    secondUpBranch[i].display()
+  }
+  for (let i = 0;i < leftBranch.length; i++) {
+    leftBranch[i].display()
+  }
+  for (let i = 0;i < rightBranch.length; i++) {
+    rightBranch[i].display()
+  }
+  for (let i = 0;i < secondleftBranch.length; i++) {
+    secondleftBranch[i].display()
+  }
+  for (let i = 0;i < secondRightBranch.length; i++) {
+    secondRightBranch[i].display()
   }
 }
 
@@ -117,7 +136,7 @@ function drawRandomLine() {
 
   nextX = constrain(nextX, 0, width);
   nextY = constrain(nextY, 0, height);
-
+   // Set a random range of -10 to 10 for each color change.
   g += random(-10, 10);
   b += random(-10, 10);
 
