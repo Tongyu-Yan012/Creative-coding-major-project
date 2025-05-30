@@ -99,7 +99,7 @@ function drawRandomLine() {
 
   nextX = constrain(nextX, 0, width);
   nextY = constrain(nextY, 0, height);
-
+   // Set a random range of -10 to 10 for each color change.
   g += random(-10, 10);
   b += random(-10, 10);
 
