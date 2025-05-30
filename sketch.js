@@ -1,23 +1,23 @@
 // ground Array
-let groundPointArray = [{ x: 300, y: 595 }, { x: 246, y: 591 }, { x: 194, y: 589 }, { x: 351, y: 596 }, { x: 406, y: 595 }];
+let groundPointArray = [new Point(300, 595), new Point(246,  591), new Point ( 194,  589), new Point  (351,  596), new Point  (406,  595) ];
 
 // The first branch Arrary
-let firstBranchArray = [{ x: 306, y: 557 },{ x: 304, y: 526 },{ x: 304, y: 490 },{ x: 306, y: 411 },{ x: 307, y: 329 }];
+let firstBranchArray = [new Point ( 306,  557 ),new Point ( 304,  526),new Point  (304,  490 ),new Point  (306,  411),new Point  (307,  329 )];
 
 // The first left Branch
-let leftBranch = [{ x: 127, y: 84 },{ x: 181, y: 258 },{ x: 182, y: 212 }, { x: 131, y: 136 },  { x: 135, y: 174 },  { x: 188, y: 172 }, { x: 180, y: 327 },  { x: 239, y: 328 },  { x: 278, y: 329 }];
+let leftBranch = [new Point  (127,  84),new Point  (181,  258),new Point  (182,  212), new Point  (131,  136),  new Point  (135,  174),  new Point  (188,  172), new Point  (180,  327),  new Point  (239,  328),  new Point  (278,  329)];
 
 // The first right Branch
-let rightBranch = [{ x: 348, y: 329 },  { x: 384, y: 333 },  { x: 421, y: 333 },  { x: 427, y: 272 },  { x: 429, y: 239 },  { x: 434, y: 183 },  { x: 434, y: 154 },  { x: 461, y: 159 },  { x: 504, y: 172 },  { x: 534, y: 183 },  { x: 539, y: 142 }];
+let rightBranch = [new Point (348,  329),  new Point  (384,  333),  new Point  (421,  333),  new Point  (427,  272),  new Point  (429,  239),  new Point  (434,  183),  new Point  (434,  154),  new Point  (461,  159),  new Point  (504,  172),  new Point  (534,  183),  new Point  (539,  142 )];
 
 // The second up branch Array
-let secondUpBranch = [{ x: 309, y: 314 },  { x: 313, y: 289 },  { x: 314, y: 246 }];
+let secondUpBranch = [new Point  (309,  314),  new Point  (313,  289),  new Point  (314,  246)];
 
 // The second left branch
-let secondleftBranch = [{ x: 270, y: 246 },{ x: 245, y: 244 },{ x: 268, y: 212 }];
+let secondleftBranch = [new Point  (270,  246),new Point  (245,  244),new Point  (268,  212)];
 
 // The second Right Branch
-let secondRightBranch = [{ x: 360, y: 245 },  { x: 360, y: 216 }];
+let secondRightBranch = [new Point  (360,  245),  new Point  (360,  216)];
 
 // The Array of Line
 let lineArray = [];
@@ -44,11 +44,12 @@ function setup() {
   background(25);
 
 
-  for(i=0; i<groundPointArray.length; i++){
+  for(let i=0; i < groundPointArray.length - 1; i++){
     let p1 = groundPointArray[i];
     let p2 = groundPointArray[i + 1];
-    let newLine =new Branch(p1, p2, `yellow`, 10)
-    lineArray.push(newLine)
+    console.log(p2)
+    let branchLine =new Branch(p1, p2, `yellow`, 5)
+    lineArray.push(branchLine)
   }
 }
 
@@ -72,7 +73,7 @@ function drawRandomLine() {
   r = 0;
   g = random(255);
   b = random(255);
-  pop();
+  
   let nextX = xPos + random(-maxLineLength, maxLineLength);
   let nextY = yPos + random(-maxLineLength, maxLineLength);
 
@@ -86,10 +87,11 @@ function drawRandomLine() {
   b = constrain(b, 0, 255);
 
   stroke(r, g, b);
-
+  strokeWeight(1);
   line(xPos, yPos, nextX, nextY);
   xPos = nextX;
   yPos = nextY;
+  pop();
 }
 
 function getRandomValueUsePerlin(MagnificationPara = 10) {
