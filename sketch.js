@@ -38,6 +38,7 @@ function setup() {
   yPos = height / 2;
   
   // Red is delete considering the background
+  push()
   r = 0;                
   g = random(255);      
   b = random(255);      
@@ -46,12 +47,32 @@ function setup() {
   for (let pt of rawCoords) {
     pointArray.push(new Point(pt.x, pt.y, 8));
   }
+  pop()
+
+  lineArray.push(new Branch(300, 595, 300, 250, `yellow`, 5))
+  lineArray.push(new Branch(190, 595, 410, 595, `yellow`, 5))
+  lineArray.push(new Branch(240, 250, 360, 250, `yellow`, 3))
+  lineArray.push(new Branch(270, 250, 270, 220, `yellow`, 3))
+  lineArray.push(new Branch(360, 250, 360, 220, `yellow`, 3))
+  lineArray.push(new Branch(300, 330, 182, 330, `yellow`, 3))
+  lineArray.push(new Branch(182, 330, 182, 178, `yellow`, 3))
+  lineArray.push(new Branch(182, 178, 127, 178, `yellow`, 1))
+  lineArray.push(new Branch(127, 178, 127, 84, `yellow`, 1))
+  lineArray.push(new Branch(300, 330, 420, 330, `yellow`, 3))
+  lineArray.push(new Branch(420, 330, 430, 160, `yellow`, 3))
+  lineArray.push(new Branch(430, 160, 540, 175, `yellow`, 1))
+  lineArray.push(new Branch(540, 175, 540, 150, `yellow`, 1))
 }
 
 function draw() {
   for (let i = 0; i < 1; i++) {
     drawRandomLine();
   }
+
+  for (let i = 0; i < lineArray.length; i++) {
+    lineArray[i].display();
+  }
+
   for (let p of pointArray) {
     p.display();  
   }
