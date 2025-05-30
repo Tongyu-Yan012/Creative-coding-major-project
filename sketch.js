@@ -2,6 +2,7 @@
 let groundPointArray = [new Point(300, 595), new Point(246,  591), new Point ( 194,  589), new Point  (351,  596), new Point  (406,  595) ];
 
 // The first branch Arrary
+
 let firstBranchArray = [new Point ( 306,  557 ),new Point ( 304,  526),new Point  (304,  490 ),new Point  (306,  411),new Point  (307,  329 )];
 
 // The first left Branch
@@ -51,6 +52,7 @@ function setup() {
     let branchLine =new Branch(p1, p2, `yellow`, 5)
     lineArray.push(branchLine)
   }
+  
 }
 
 function draw() {
@@ -64,6 +66,24 @@ function draw() {
 
   for (let i = 0;i < groundPointArray.length; i++) {
     groundPointArray[i].display()
+  }
+  for (let i = 0;i < firstBranchArray.length; i++) {
+    firstBranchArray[i].display()
+  }
+  for (let i = 0;i < secondUpBranch.length; i++) {
+    secondUpBranch[i].display()
+  }
+  for (let i = 0;i < leftBranch.length; i++) {
+    leftBranch[i].display()
+  }
+  for (let i = 0;i < rightBranch.length; i++) {
+    rightBranch[i].display()
+  }
+  for (let i = 0;i < secondleftBranch.length; i++) {
+    secondleftBranch[i].display()
+  }
+  for (let i = 0;i < secondRightBranch.length; i++) {
+    secondRightBranch[i].display()
   }
 }
 
