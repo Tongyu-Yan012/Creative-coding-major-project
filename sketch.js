@@ -2,22 +2,22 @@
 let groundPointArray = [new Point(300, 595), new Point(246,  591), new Point ( 194,  589), new Point  (351,  596), new Point  (406,  595) ];
 
 // The first branch Arrary
-let firstBranchArray = [new Point ( 306,  557 ),new Point ( 304,  526),new Point  (304,  490 ),new Point  (306,  411),new Point  (307,  329 )];
+let firstBranchArray = [new Point(300, 595), new Point ( 306,  557 ),new Point ( 304,  526),new Point  (304,  490 ),new Point  (306,  411),new Point  (307,  329 )];
 
 // The first left Branch
-let leftBranch = [new Point  (127,  84),new Point  (181,  258),new Point  (182,  212), new Point  (131,  136),  new Point  (135,  174),  new Point  (188,  172), new Point  (180,  327),  new Point  (239,  328),  new Point  (278,  329)];
+let leftBranch = [new Point(127, 84), new Point(131, 136),  new Point(135, 174), new Point(188, 172), new Point(182, 212), new Point(181, 258),   new Point(180, 327),  new Point(239, 328),  new Point(278, 329), new Point  (307,  329 )];
 
 // The first right Branch
-let rightBranch = [new Point (348,  329),  new Point  (384,  333),  new Point  (421,  333),  new Point  (427,  272),  new Point  (429,  239),  new Point  (434,  183),  new Point  (434,  154),  new Point  (461,  159),  new Point  (504,  172),  new Point  (534,  183),  new Point  (539,  142 )];
+let rightBranch = [new Point  (307,  329 ), new Point (348,  329),  new Point  (384,  333),  new Point  (421,  333),  new Point  (427,  272),  new Point  (429,  239),  new Point  (434,  183),  new Point  (434,  154),  new Point  (461,  159),  new Point  (504,  172),  new Point  (534,  183),  new Point  (539,  142 )];
 
 // The second up branch Array
-let secondUpBranch = [new Point  (309,  314),  new Point  (313,  289),  new Point  (314,  246)];
+let secondUpBranch = [new Point  (307,  329 ), new Point  (309,  314),  new Point  (313,  289),  new Point  (314,  246)];
 
 // The second left branch
-let secondleftBranch = [new Point  (270,  246),new Point  (245,  244),new Point  (268,  212)];
+let secondLeftBranch = [new Point  (314,  246), new Point  (270,  246),new Point  (245,  244),  new Point  (268,  212)];
 
 // The second Right Branch
-let secondRightBranch = [new Point  (360,  245),  new Point  (360,  216)];
+let secondRightBranch = [new Point  (314,  246), new Point  (360,  245),  new Point  (360,  216)];
 
 // The Array of Line
 let lineArray = [];
@@ -47,8 +47,46 @@ function setup() {
   for(let i=0; i < groundPointArray.length - 1; i++){
     let p1 = groundPointArray[i];
     let p2 = groundPointArray[i + 1];
-    console.log(p2)
-    let branchLine =new Branch(p1, p2, `yellow`, 5)
+    let branchLine =new Branch(p1, p2, `yellow`, 6)
+    lineArray.push(branchLine)
+  }
+  for(let i=0; i < firstBranchArray.length - 1; i++){
+    let p1 = firstBranchArray[i];
+    let p2 = firstBranchArray[i + 1];
+    let branchLine =new Branch(p1, p2, `yellow`, 6)
+    lineArray.push(branchLine)
+  }
+  for(let i=0; i < leftBranch.length - 1; i++){
+    let p1 = leftBranch[i];
+    let p2 = leftBranch[i + 1];
+    let branchLine =new Branch(p1, p2, `yellow`, 3)
+    lineArray.push(branchLine)
+  }
+  for(let i=0; i < rightBranch.length - 1; i++){
+    let p1 = rightBranch[i];
+    let p2 = rightBranch[i + 1];
+    let branchLine =new Branch(p1, p2, `yellow`, 3)
+    lineArray.push(branchLine)
+  }
+
+  for(let i=0; i < secondUpBranch.length - 1; i++){
+    let p1 = secondUpBranch[i];
+    let p2 = secondUpBranch[i + 1];
+    let branchLine =new Branch(p1, p2, `yellow`, 2)
+    lineArray.push(branchLine)
+  }
+
+  for(let i=0; i < secondLeftBranch.length - 1; i++){
+    let p1 = secondLeftBranch[i];
+    let p2 = secondLeftBranch[i + 1];
+    let branchLine =new Branch(p1, p2, `yellow`, 1)
+    lineArray.push(branchLine)
+  }
+
+  for(let i=0; i < secondRightBranch.length - 1; i++){
+    let p1 = secondRightBranch[i];
+    let p2 = secondRightBranch[i + 1];
+    let branchLine =new Branch(p1, p2, `yellow`, 1)
     lineArray.push(branchLine)
   }
 }
