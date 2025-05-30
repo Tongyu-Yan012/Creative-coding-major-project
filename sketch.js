@@ -16,28 +16,9 @@ const rawCoords = [
   { x: 270, y: 246 },
   { x: 245, y: 244 },
   { x: 268, y: 212 },
-  { x: 360, y: 245 },
-  { x: 360, y: 216 },
-  { x: 348, y: 329 },
-  { x: 384, y: 333 },
-  { x: 421, y: 333 },
-  { x: 427, y: 272 },
-  { x: 429, y: 239 },
-  { x: 434, y: 183 },
-  { x: 434, y: 154 },
-  { x: 461, y: 159 },
-  { x: 504, y: 172 },
-  { x: 534, y: 183 },
-  { x: 539, y: 142 },
-  { x: 180, y: 327 },
-  { x: 239, y: 328 },
-  { x: 278, y: 329 },
-  { x: 131, y: 136 },
-  { x: 135, y: 174 },
-  { x: 188, y: 172 },
-  { x: 182, y: 212 },
-  { x: 181, y: 258 },
-  { x: 127, y: 84 },
+  
+  
+ 
 ];
 
 let pointArray = [];
@@ -49,10 +30,10 @@ let groundPointArray = [];
 let firstBranchArray = [];
 
 // The first left Branch
-let leftBranch = [];
+let leftBranch = [{ x: 127, y: 84 },{ x: 181, y: 258 },{ x: 182, y: 212 }, { x: 131, y: 136 },  { x: 135, y: 174 },  { x: 188, y: 172 }, { x: 180, y: 327 },  { x: 239, y: 328 },  { x: 278, y: 329 }];
 
 // The first right Branch
-let rightBranch = [];
+let rightBranch = [{ x: 348, y: 329 },  { x: 384, y: 333 },  { x: 421, y: 333 },  { x: 427, y: 272 },  { x: 429, y: 239 },  { x: 434, y: 183 },  { x: 434, y: 154 },  { x: 461, y: 159 },  { x: 504, y: 172 },  { x: 534, y: 183 },  { x: 539, y: 142 }];
 
 // The second up branch Array
 let secondUpBranch = [];
@@ -61,7 +42,7 @@ let secondUpBranch = [];
 let secondleftBranch = [];
 
 // The second Right Branch
-let secondRightBranch = [];
+let secondRightBranch = [{ x: 360, y: 245 },  { x: 360, y: 216 }];
 
 // The Array of Line
 let lineArray = [];
@@ -114,13 +95,13 @@ function setup() {
 }
 
 function draw() {
-  for (let i = 0; i < 1; i++) {
+ /* for (let i = 0; i < 1; i++) {
     drawRandomLine();
   }
 
-  for (let i = 0; i < lineArray.length; i++) {
+  /*for (let i = 0; i < lineArray.length; i++) {
     lineArray[i].display();
-  }
+  }*/
 
   for (let p of pointArray) {
     p.display();
