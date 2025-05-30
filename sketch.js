@@ -147,9 +147,9 @@ function drawRandomLine() {
   yPos = nextY;
 }
 
-function getRandomValueUsePerlin() {
+function getRandomValueUsePerlin(MagnificationPara = 10) {
   let n = noise(0.01);
-  let offset = n * 10;
+  let offset = n * MagnificationPara;
 
   return offset;
 }
