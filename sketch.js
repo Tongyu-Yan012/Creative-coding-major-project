@@ -22,10 +22,10 @@ let rightUpBranch = [];
 let secondUpBranch = [];
 
 // The second left branch
-let secondLeftBranch = [];
+let secondleftBranch = [];
 
 // The second left Up branch
-let secondLeftUpBranch = [];
+let secondleftUpBranch = [];
 
 // The second Right Branch
 let secondRightBranch = [];
@@ -58,53 +58,11 @@ function setup() {
   background(25);
   let firstStartPointOfTheGround = new Point(200, 595);
 
+
   setThePoint(firstStartPointOfTheGround);
+  addLineToLineArray();
 
-  for (let i = 0; i < groundPointArray.length - 1; i++) {
-    let p1 = groundPointArray[i];
-    let p2 = groundPointArray[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 6);
-    lineArray.push(branchLine);
-  }
-  for (let i = 0; i < firstBranchArray.length - 1; i++) {
-    let p1 = firstBranchArray[i];
-    let p2 = firstBranchArray[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 6);
-    lineArray.push(branchLine);
-  }
-  for (let i = 0; i < leftBranch.length - 1; i++) {
-    let p1 = leftBranch[i];
-    let p2 = leftBranch[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 3);
-    lineArray.push(branchLine);
-  }
-  for (let i = 0; i < rightBranch.length - 1; i++) {
-    let p1 = rightBranch[i];
-    let p2 = rightBranch[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 3);
-    lineArray.push(branchLine);
-  }
-
-  for (let i = 0; i < secondUpBranch.length - 1; i++) {
-    let p1 = secondUpBranch[i];
-    let p2 = secondUpBranch[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 2);
-    lineArray.push(branchLine);
-  }
-
-  for (let i = 0; i < secondLeftBranch.length - 1; i++) {
-    let p1 = secondLeftBranch[i];
-    let p2 = secondLeftBranch[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 1);
-    lineArray.push(branchLine);
-  }
-
-  for (let i = 0; i < secondRightBranch.length - 1; i++) {
-    let p1 = secondRightBranch[i];
-    let p2 = secondRightBranch[i + 1];
-    let branchLine = new Branch(p1, p2, `yellow`, 1);
-    lineArray.push(branchLine);
-  }
+  console.log(lineArray);  
 }
 
 function draw() {
@@ -142,6 +100,9 @@ function drawRandomLine() {
   xPos = nextX;
   yPos = nextY;
   pop();
+}
+function setThePoint(firstStartPointOfTheGround) {
+  groundPointArray[0] = firstStartPointOfTheGround;
 }
 function setThePoint(firstStartPointOfTheGround) {
   groundPointArray[0] = firstStartPointOfTheGround;
@@ -223,28 +184,28 @@ function setThePoint(firstStartPointOfTheGround) {
   }
 
   let theSecondCrossPoint = secondUpBranch[secondUpBranch.length - 1];
-  secondLeftBranch[0] = theSecondCrossPoint;
+  secondleftBranch[0] = theSecondCrossPoint;
   secondRightBranch[0] = theSecondCrossPoint;
 
   //SecondLeftBranch
   for (let i = 0; i < 4; i++) {
-    let basePoint = secondLeftBranch[i];
+    let basePoint = secondleftBranch[i];
     let newPointOfTheSecondLeft = new Point(
       basePoint.x + getRandomValueUsePerlin(10, 20, -1),
       basePoint.y + getRandomValueUsePerlin(1, 5, -1)
     );
-    secondLeftBranch[i + 1] = newPointOfTheSecondLeft;
+    secondleftBranch[i + 1] = newPointOfTheSecondLeft;
   }
 
-  secondLeftUpBranch[0] = secondLeftBranch[secondLeftBranch.length - 1];
+  secondleftUpBranch[0] = secondleftBranch[secondleftBranch.length - 1];
 
   //Second Left Up Branch Point
   for (let i = 0; i < 3; i++) {
     let newPointOfTheSecondLeftUpBranch = new Point(
-      secondLeftUpBranch[i].x + getRandomValueUsePerlin(1, 5),
-      secondLeftUpBranch[i].y + getRandomValueUsePerlin(5, 10, -1)
+      secondleftUpBranch[i].x + getRandomValueUsePerlin(1, 5),
+      secondleftUpBranch[i].y + getRandomValueUsePerlin(5, 10, -1)
     );
-    secondLeftUpBranch[i + 1] = newPointOfTheSecondLeftUpBranch;
+    secondleftUpBranch[i + 1] = newPointOfTheSecondLeftUpBranch;
   }
 
   //secondRightBranch
@@ -266,6 +227,85 @@ function setThePoint(firstStartPointOfTheGround) {
       secondRightUpBranch[i].y + getRandomValueUsePerlin(5, 10, -1)
     );
     secondRightUpBranch[i + 1] = newPointOfTheSecondRightUpBranch;
+  }
+}
+
+function addLineToLineArray() {
+  for (let i = 0; i < groundPointArray.length - 1; i++) {
+    // groundPointArray[i].display();
+    lineArray.push(
+      new Branch(groundPointArray[i], groundPointArray[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < firstBranchArray.length - 1; i++) {
+    // firstBranchArray[i].display();
+    lineArray.push(
+      new Branch(firstBranchArray[i], firstBranchArray[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < leftBranch.length - 1; i++) {
+    // leftBranch[i].display();
+    lineArray.push(new Branch(leftBranch[i], leftBranch[i + 1], `yellow`, 1));
+  }
+
+  for (let i = 0; i < leftUpBranch.length - 1; i++) {
+    // leftUpBranch[i].display();
+    lineArray.push(
+      new Branch(leftUpBranch[i], leftUpBranch[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < rightBranch.length - 1; i++) {
+    // rightBranch[i].display();
+    lineArray.push(new Branch(rightBranch[i], rightBranch[i + 1], `yellow`, 1));
+  }
+  for (let i = 0; i < rightUpBranch.length - 1; i++) {
+    // rightUpBranch[i].display();
+    lineArray.push(
+      new Branch(rightUpBranch[i], rightUpBranch[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < secondUpBranch.length - 1; i++) {
+    // secondUpBranch[i].display();
+    lineArray.push(
+      new Branch(secondUpBranch[i], secondUpBranch[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < secondleftBranch.length - 1; i++) {
+    // secondleftBranch[i].display();
+    lineArray.push(
+      new Branch(secondleftBranch[i], secondleftBranch[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < secondleftUpBranch.length - 1; i++) {
+    // secondleftUpBranch[i].display();
+    lineArray.push(
+      new Branch(secondleftUpBranch[i], secondleftUpBranch[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < secondRightBranch.length - 1; i++) {
+    // secondRightBranch[i].display();
+    lineArray.push(
+      new Branch(secondRightBranch[i], secondRightBranch[i + 1], `yellow`, 1)
+    );
+  }
+
+  for (let i = 0; i < secondRightUpBranch.length - 1; i++) {
+    // secondRightUpBranch[i].display();
+    lineArray.push(
+      new Branch(
+        secondRightUpBranch[i],
+        secondRightUpBranch[i + 1],
+        `yellow`,
+        1
+      )
+    );
   }
 }
 
