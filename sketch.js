@@ -50,14 +50,31 @@ let maxLineLength = 80;
 let r;
 let g;
 let b;
+//Let's make an object to hold the draw properties of the artwork
+let imgDrwPrps = {aspect: 0, width: 0, height: 0, xOffset: 0, yOffset: 0};
+let canvasAspectRatio = 0; 
+const canvasWidth = 600;
+const canvasHeight = 800;
 
 function setup() {
-  createCanvas(600, 800);
-  xPos = width / 2;
-  yPos = height / 2;
-  background(25);
-  let firstStartPointOfTheGround = new Point(200, 595);
+  // Create canvas that fills the browser window 
+  createCanvas(windowWidth, windowHeight);
+  
+  // Set aspect ratio of virtual canvas 
+  imgDrwPrps.aspect = canvasWidth / canvasHeight;
+  
+  // Initial calculation of drawing properties 
+  calculateImageDrawProps();
+  
+  // Initialize position at center of virtual canvas 
+  xPos = canvasWidth / 2;
+  yPos = canvasHeight / 2;
+  // Initialize color values, Red is delete considering the background
+  r = 0;
+  g = random(255);
+  b = random(255);
 
+  let firstStartPointOfTheGround = new Point(200, 595);
 
   setThePoint(firstStartPointOfTheGround);
   addLineToLineArray();
@@ -66,37 +83,79 @@ function setup() {
 }
 
 function draw() {
-  for (let i = 0; i < 1; i++) {
-    drawRandomLine();
-  }
+  // Apply transformations
+  push();
+  translate(imgDrwPrps.xOffset, imgDrwPrps.yOffset);
+  scale(imgDrwPrps.width / canvasWidth, imgDrwPrps.height / canvasHeight);
+  
+  // Draw random line
+  drawRandomLine();
+  
+  pop();
+
 
   for (let i = 0; i < lineArray.length; i++) {
     lineArray[i].display();
   }
 }
 
-function drawRandomLine() {
-  // Red is delete considering the background
-  push();
-  r = 0;
-  g = random(255);
-  b = random(255);
+// Window resize event 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  
+  calculateImageDrawProps();
+}
 
+// Calculate the canvas aspect ratio 
+function calculateImageDrawProps() {
+  const canvasAspectRatio = width / height;
+  
+  // If virtual aspect > canvas aspect (landscape screens) 
+  if (imgDrwPrps.aspect > canvasAspectRatio) {
+    imgDrwPrps.width = width; 
+    imgDrwPrps.height = width / imgDrwPrps.aspect;
+    imgDrwPrps.yOffset = (height - imgDrwPrps.height) / 2;
+    imgDrwPrps.xOffset = 0;
+  } 
+  // If virtual aspect < canvas aspect (portrait screens) 
+  else if (imgDrwPrps.aspect < canvasAspectRatio) {
+    imgDrwPrps.height = height;
+    imgDrwPrps.width = height * imgDrwPrps.aspect;
+    imgDrwPrps.xOffset = (width - imgDrwPrps.width) / 2;
+    imgDrwPrps.yOffset = 0;
+  }
+  // If aspects are equal 
+  else {
+    imgDrwPrps.width = width;
+    imgDrwPrps.height = height;
+    imgDrwPrps.xOffset = 0;
+    imgDrwPrps.yOffset = 0;
+  }
+}
+
+//Draw a random line
+function drawRandomLine() {
   let nextX = xPos + random(-maxLineLength, maxLineLength);
   let nextY = yPos + random(-maxLineLength, maxLineLength);
-
-  nextX = constrain(nextX, 0, width);
-  nextY = constrain(nextY, 0, height);
-  // Set a random range of -10 to 10 for each color change.
-  g += random(-10, 10);
+  
+  // Constrain within virtual canvas bounds
+  nextX = constrain(nextX, 0, canvasWidth);
+  nextY = constrain(nextY, 0, canvasHeight);
+  
+  g += random(-10, 10); 
   b += random(-10, 10);
-
+  
+  // Constrain color values 
   g = constrain(g, 0, 255);
   b = constrain(b, 0, 255);
 
   stroke(r, g, b);
-  strokeWeight(1);
+  strokeWeight(2);
+  
+  // Draw the line 
   line(xPos, yPos, nextX, nextY);
+  
+  // Update current position 
   xPos = nextX;
   yPos = nextY;
   pop();
