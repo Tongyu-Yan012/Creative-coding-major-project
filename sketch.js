@@ -91,8 +91,6 @@ function draw() {
   // Draw random line
   drawRandomLine();
 
-  pop();
-
   for (let i = 0; i < semiCircleArray.length; i++) {
     semiCircleArray[i].display();
   }
@@ -100,6 +98,8 @@ function draw() {
   for (let i = 0; i < lineArray.length; i++) {
     lineArray[i].display();
   }
+
+  pop();
 }
 
 // Window resize event
@@ -138,6 +138,7 @@ function calculateImageDrawProps() {
 
 //Draw a random line
 function drawRandomLine() {
+  push();
   let nextX = xPos + random(-maxLineLength, maxLineLength);
   let nextY = yPos + random(-maxLineLength, maxLineLength);
 
@@ -153,7 +154,7 @@ function drawRandomLine() {
   b = constrain(b, 0, 255);
 
   stroke(r, g, b);
-  strokeWeight(2);
+  strokeWeight(1);
 
   // Draw the line
   line(xPos, yPos, nextX, nextY);
