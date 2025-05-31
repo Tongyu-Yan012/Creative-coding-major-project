@@ -60,52 +60,51 @@ function setup() {
 
   setThePoint(firstStartPointOfTheGround);
 
-  for(let i=0; i < groundPointArray.length - 1; i++){
+  for (let i = 0; i < groundPointArray.length - 1; i++) {
     let p1 = groundPointArray[i];
     let p2 = groundPointArray[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 6)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 6);
+    lineArray.push(branchLine);
   }
-  for(let i=0; i < firstBranchArray.length - 1; i++){
+  for (let i = 0; i < firstBranchArray.length - 1; i++) {
     let p1 = firstBranchArray[i];
     let p2 = firstBranchArray[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 6)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 6);
+    lineArray.push(branchLine);
   }
-  for(let i=0; i < leftBranch.length - 1; i++){
+  for (let i = 0; i < leftBranch.length - 1; i++) {
     let p1 = leftBranch[i];
     let p2 = leftBranch[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 3)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 3);
+    lineArray.push(branchLine);
   }
-  for(let i=0; i < rightBranch.length - 1; i++){
+  for (let i = 0; i < rightBranch.length - 1; i++) {
     let p1 = rightBranch[i];
     let p2 = rightBranch[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 3)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 3);
+    lineArray.push(branchLine);
   }
 
-  for(let i=0; i < secondUpBranch.length - 1; i++){
+  for (let i = 0; i < secondUpBranch.length - 1; i++) {
     let p1 = secondUpBranch[i];
     let p2 = secondUpBranch[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 2)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 2);
+    lineArray.push(branchLine);
   }
 
-  for(let i=0; i < secondLeftBranch.length - 1; i++){
+  for (let i = 0; i < secondLeftBranch.length - 1; i++) {
     let p1 = secondLeftBranch[i];
     let p2 = secondLeftBranch[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 1)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 1);
+    lineArray.push(branchLine);
   }
 
-  for(let i=0; i < secondRightBranch.length - 1; i++){
+  for (let i = 0; i < secondRightBranch.length - 1; i++) {
     let p1 = secondRightBranch[i];
     let p2 = secondRightBranch[i + 1];
-    let branchLine =new Branch(p1, p2, `yellow`, 1)
-    lineArray.push(branchLine)
+    let branchLine = new Branch(p1, p2, `yellow`, 1);
+    lineArray.push(branchLine);
   }
-  
 }
 
 function draw() {
@@ -116,8 +115,6 @@ function draw() {
   for (let i = 0; i < lineArray.length; i++) {
     lineArray[i].display();
   }
-
-  
 }
 
 function drawRandomLine() {
@@ -126,13 +123,13 @@ function drawRandomLine() {
   r = 0;
   g = random(255);
   b = random(255);
-  
+
   let nextX = xPos + random(-maxLineLength, maxLineLength);
   let nextY = yPos + random(-maxLineLength, maxLineLength);
 
   nextX = constrain(nextX, 0, width);
   nextY = constrain(nextY, 0, height);
-   // Set a random range of -10 to 10 for each color change.
+  // Set a random range of -10 to 10 for each color change.
   g += random(-10, 10);
   b += random(-10, 10);
 
