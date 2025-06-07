@@ -1,5 +1,7 @@
 let pointArray = [];
 
+let bgLayer;
+
 // ground Array
 let groundPointArray = [];
 
@@ -60,6 +62,14 @@ function setup() {
   // Create canvas that fills the browser window
   createCanvas(windowWidth, windowHeight);
 
+  /**
+   * When try to animate the ball and the line, if we want to refresh the background, the random line will be refreshed too
+   * Inspired By https://editor.p5js.org/LuqianChen/sketches/rkTNtCE_l
+   * We put the random line in another layer
+   */
+  bgLayer = createGraphics(canvasWidth, canvasHeight);
+  bgLayer.background(255); // initial Background
+
   // Set aspect ratio of virtual canvas
   imgDrwPrps.aspect = canvasWidth / canvasHeight;
 
@@ -83,6 +93,17 @@ function setup() {
 }
 
 function draw() {
+  background(255);
+
+  //Put another layer as a background image
+  image(
+    bgLayer,
+    imgDrwPrps.xOffset,
+    imgDrwPrps.yOffset,
+    imgDrwPrps.width,
+    imgDrwPrps.height
+  );
+
   // Apply transformations
   push();
   translate(imgDrwPrps.xOffset, imgDrwPrps.yOffset);
@@ -153,11 +174,10 @@ function drawRandomLine() {
   g = constrain(g, 0, 255);
   b = constrain(b, 0, 255);
 
-  stroke(r, g, b);
-  strokeWeight(1);
-
-  // Draw the line
-  line(xPos, yPos, nextX, nextY);
+  //set the Attribute of the another layer
+  bgLayer.stroke(r, g, b);
+  bgLayer.strokeWeight(1);
+  bgLayer.line(xPos, yPos, nextX, nextY);
 
   // Update current position
   xPos = nextX;
