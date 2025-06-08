@@ -1,5 +1,4 @@
-let pointArray = [];
-
+// Another layer for background
 let bgLayer;
 
 // ground Array
@@ -45,14 +44,15 @@ let semiCircleArray = [];
 let xPos;
 let yPos;
 
-// Let's make a variable to control the maximum line length
+// A variable to control the maximum line length
 let maxLineLength = 80;
 
 // Declare global variables for RGB colour values
 let r;
 let g;
 let b;
-//Let's make an object to hold the draw properties of the artwork
+
+//An object to hold the draw properties of the artwork
 let imgDrwPrps = { aspect: 0, width: 0, height: 0, xOffset: 0, yOffset: 0 };
 let canvasAspectRatio = 0;
 const canvasWidth = 600;
@@ -89,7 +89,7 @@ function setup() {
   setThePoint(firstStartPointOfTheGround);
   addLineAndBallToArray();
 
-  console.log(lineArray);
+  // console.log(lineArray);
 }
 
 function draw() {
@@ -185,6 +185,11 @@ function drawRandomLine() {
   pop();
 }
 
+/**
+ *
+ * @param {Point} firstStartPointOfTheGround
+ * Base on the firstStartPointOfTheGround and use the array.length to calculate all the cross point and set point array
+ */
 function setThePoint(firstStartPointOfTheGround) {
   groundPointArray[0] = firstStartPointOfTheGround;
 
@@ -311,6 +316,10 @@ function setThePoint(firstStartPointOfTheGround) {
   }
 }
 
+/**
+ * After all the point array have been set
+ * Use this function to create all the line and semicircle
+ */
 function addLineAndBallToArray() {
   for (let i = 0; i < groundPointArray.length - 1; i++) {
     // groundPointArray[i].display();
@@ -419,6 +428,16 @@ function addLineAndBallToArray() {
   }
 }
 
+/**
+ *
+ * @param {Number} min
+ * @param {Number} max min, max are use to control the scale of return values
+ * @param {Number} NegativeAndPositiveNum
+ * NegativeAndPositiveNum param are use to control return a positive number or a negative number
+ * if the param > 0.5 this function will return positive number
+ * if the param < 0.5 this function will return negative number
+ * @returns
+ */
 function getRandomValueUsePerlin(
   min = 0,
   max = 20,
