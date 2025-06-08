@@ -184,9 +184,7 @@ function drawRandomLine() {
   yPos = nextY;
   pop();
 }
-function setThePoint(firstStartPointOfTheGround) {
-  groundPointArray[0] = firstStartPointOfTheGround;
-}
+
 function setThePoint(firstStartPointOfTheGround) {
   groundPointArray[0] = firstStartPointOfTheGround;
 
