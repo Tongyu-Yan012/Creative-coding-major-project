@@ -24,6 +24,16 @@ class SemiCircle {
     //https://p5js.org/reference/p5/atan2/
     this.angle = atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x);
     this.borderWeight = borderWeight;
+
+    // Drop Down attributes
+    this.falling = false;
+    this.hasDown = false;
+    this.velocity = 0;
+    this.gravity = 0.5;
+    this.boundness = 0.8;
+    this.groundY = 800;
+
+    this.minimumSpeed = 0.2;
   }
 
   display() {
