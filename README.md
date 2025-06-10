@@ -1,62 +1,22 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+# IDEA9103_MainProject_zoli0682
 
-# Anwar Jalal Shemza: Apple Tree
+## Instructions
 
-# ![an image of the scream](readmeImages/Anwar%20Jalal%20Shemza%20Apple%20Tree.jpeg)
+Taps the "S" on the keyboard, a random fruit will drop
 
-=======
+## Drive Part
 
-> > > > > > > 60a96cb46abc2b11374f0df3d939dff4e238f5d7
-> > > > > > > // Add new image of apple tree
+I'm mainly responsible for the **interaction** part
 
-# Anwar Jalal Shemza Apple Tree
+## Image Animated
 
-![an image of the scream](readmeImages/Anwar%20Jalal%20Shemza%20Apple%20Tree.jpeg)
-// Add new image of apple tree
+The semiCircle(fruit) part of the image will be animated. When the user taps the "S" on the keyboard, a random fruit will drop
 
-# Flowering-apple-tree pic
+## References Inspiration
 
-![an image of the scream](readmeImages/flowering-apple-tree.jpg)
-<<<<<<< HEAD
-<<<<<<< HEAD
-//This is the Piet Mondrian artwork in which shows tree branches growing in a disodered way. Compared with the image of the rational-look Anwar Jalal Shemza Apple Tree image, it shows a different way of vivid and tension of nature life.
+![FruitTree](readmeImages/fruitTree.jpg)<br/>
+My inspiration mainly comes from this picture, which inspires me to think: **Can users be allowed to control the falling process of the fruit independently?** When all the fruits fall one after another, leaving only the branches and lines, the picture will naturally convey an emotional change from **harvest to decline**, creating a dynamic sense of time and life.
 
-> > > > > > > # 0661961d7c4f2a1b7e3f483ea49576d3b38a76d3
-> > > > > > >
-> > > > > > > //This is the Piet Mondrian artwork in which shows tree branches growing in a disodered way. Compared with the image of the rational-look Anwar Jalal Shemza Apple Tree image, it shows a different way of vivid and tension of nature life.
-> > > > > > > 0661961d7c4f2a1b7e3f483ea49576d3b38a76d3
+## Technical explanation
 
-// Idea of animation
-
-### Round apples appear first in dots, and the lines expand from the center, stretching like branches and gradually forming a whole tree.
-
-### Let the apples rotate around the branch and grow upward.
-
-=======
-//This is the Piet Mondrian artwork in which shows tree branches growing in a disodered way. Compared with the image of the rational-look Anwar Jalal Shemza Apple Tree image, it shows a different way of vivid and tension of nature life.
-
-# Idea of animation
-
-### Round apples appear first in dots, and the lines expand from the center, stretching like branches and gradually forming a whole tree.
-
-### Let the apples rotate around the branch and grow upward.
-
-> > > > > > > 60a96cb46abc2b11374f0df3d939dff4e238f5d7
-
-### Apples are scattered.
-
-![an Inspiration image](readmeImages/IMAGE02.jpg)<br />
-This picture is very similar to the style we chose. The fruits or leaves are all composed of circles. The circles in the second picture present a kind of drifting action. I think in our works, we can try to make natural actions such as apples falling and rolling.
-
-### Present the state of plants with different colors
-
-![an inspiration image](readmeImages/TreeOfLife.jpg)<br />
-This picture uses different color blocks to represent the changes throughout a tree's life, so I think we can also use different color blocks to represent the life of an apple tree
-### Apple-shaped variant
-![an inspiration image](readmeImages/Variation_on_the_Hexagon.jpg)
-This work by Iranian mirror mosaic artist Monir Shahroudy Farmanfarmaian consists of abstract geometric compositions fused with traditional Persian design structures, which is similar to our chosen artwork, Shemza's Apple Trees, as Shemza also combines Islamic calligraphic structures with geometric compositions, and the polygons and circles expressed by Monir are also similar in meaning and are ideal for visual transformation. The polygonal shape of the monir is also similar to the circle, making it a perfect visual translation.
-### 
-![an inspiration image](readmeImages/Bauhaus_2.jpg)
-![an inspiration image](readmeImages/1970.55_ph_web.jpg)
-The flat abstract style of Bauhaus is very similar to the works we have chosen, allowing for the creation of dispersed interactions of shapes and lines
+I add the velocity, gravity, boudness and minimunSpeed attributes which related to speed in the SemiCircle class, also added a drop function in the SemiCircle class, when the user presses the "S" key, The speed of the fruit will be superimposed by gravity over time, and the fruit will also move along the Y-axis with the speed. When the fruit hits the boundary, the speed will be multiplied by the boundness (<1) to achieve the purpose of speed attenuation. At the same time, it will be judged that if the value of the speed is less than the set minimum speed, it means that this speed can no longer meet the basic motion, and the fruit will be stopped
