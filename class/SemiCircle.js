@@ -29,7 +29,7 @@ class SemiCircle {
     this.falling = false;
     this.hasDown = false;
     this.velocity = 0;
-    this.gravity = 0.5;
+    this.gravity = 0.35;
     this.boundness = 0.8;
     this.groundY = 800;
 
@@ -90,14 +90,14 @@ class SemiCircle {
       this.cy = this.groundY - this.diameter / 2;
       //To make the speed smaller need to multiply, minus means go up
       this.velocity *= -this.boundness;
-    }
 
-    //To test the velocity of the ball if the velocity is too small, the ball need to be stop insted of keep moving
-    if (abs(this.velocity) < this.minimumSpeed) {
-      this.velocity = 0;
-      this.cy = this.groundY - this.diameter / 2;
-      this.falling = false;
-      this.hasDown = true;
+      //To test the velocity of the ball if the velocity is too small, the ball need to be stop insted of keep moving
+      if (abs(this.velocity) < this.minimumSpeed) {
+        this.velocity = 0;
+        this.cy = this.groundY - this.diameter / 2;
+        this.falling = false;
+        this.hasDown = true;
+      }
     }
   }
 }
