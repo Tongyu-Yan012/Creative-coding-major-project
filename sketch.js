@@ -40,10 +40,8 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
-// branch growth animation
-let growth = 0;
-const growSpeed = 0.1;
-let applePoints = [];
+let drawIndex = 0;
+let treeDrawnFinished = false;
 
 // Declare global variables for x and y coordinates
 let xPos;
@@ -96,10 +94,6 @@ function setup() {
 
   // console.log(lineArray);
 
-  const lastIndex = lineArray.length - 1;
-  const endPoint = lineArray[lastIndex].p2;
-  applePoints.push({ x: endPoint.x, y: endPoint.y, segmentIndex: lastIndex });
-
   //Pre-run background code, let the user open the HTML can see some background lines
   for (let i = 0; i < 5000; i++) {
     drawRandomLine();
@@ -125,35 +119,22 @@ function draw() {
 
   // Draw random line
   //Drawing more lines at the same time without changing the transparency of the background lines allows the density of the lines in the background to increase faster.
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 8; i++) {
     drawRandomLine();
   }
 
-  const brachNum = lineArray.length;
-  const now = floor(growth);
-  const t = growth - now;
-
-  for (let i = 0; i < now & i < brachNum; i++) {
-    lineArray[i].displaySegment(1);
-    semiCircleArray[i].display();
-  }
-  // branch growth
-  if (now < brachNum) {
-    lineArray[now].displaySegment(t);
-  }
-
-  // apples
-  for (let i = 0; i < applePoints.length; i++) {
-    let point = applePoints[i];
-    if (growth >= point.segmentIndex) {
-      fill(255, 0, 0);
-      noStroke();    
-      circle(point.x, point.y, 12); 
+  if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
+    drawIndex++;
+    if (drawIndex === lineArray.length-1){
+      treeDrawnFinished = true
+      console.log(treeDrawnFinished)
     }
   }
 
-  // growth speed
-  if (growth < brachNum) growth += growSpeed;  
+  for (let i = 0; i < drawIndex; i++) {
+    lineArray[i].display();
+    semiCircleArray[i].display();
+  }
 
   pop();
 }
