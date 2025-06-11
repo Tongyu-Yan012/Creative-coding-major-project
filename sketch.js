@@ -124,7 +124,10 @@ function draw() {
   scale(imgDrwPrps.width / canvasWidth, imgDrwPrps.height / canvasHeight);
 
   // Draw random line
-  drawRandomLine();
+  //Drawing more lines at the same time without changing the transparency of the background lines allows the density of the lines in the background to increase faster.
+  for (let i = 0; i < 5; i++) {
+    drawRandomLine();
+  }
 
   const brachNum = lineArray.length;
   const now = floor(growth);
