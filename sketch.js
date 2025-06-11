@@ -136,12 +136,6 @@ function draw() {
     semiCircleArray[i].display();
   }
 
-  for (let ball of semiCircleArray) {
-    if (ball.falling === true) {
-      ball.drop();
-    }
-  }
-
   pop();
 }
 
