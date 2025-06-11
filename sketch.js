@@ -40,7 +40,7 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
-//tree animation attributes
+// Tree animation attributes
 let drawIndex = 0;
 let treeDrawnFinished = false;
 
@@ -98,7 +98,7 @@ function setup() {
 
   // console.log(lineArray);
 
-  //Pre-run background code, let the user open the HTML can see some background linesAdd commentMore actions
+  //Pre-run background code, let the user open the HTML can see some background lines
   for (let i = 0; i < 5000; i++) {
     drawRandomLine();
   }
@@ -122,6 +122,7 @@ function draw() {
   scale(imgDrwPrps.width / canvasWidth, imgDrwPrps.height / canvasHeight);
 
   // Draw random line
+  //Drawing more lines at the same time without changing the transparency of the background lines allows the density of the lines in the background to increase faster.
   for (let i = 0; i < 8; i++) {
     drawRandomLine();
   }
@@ -130,7 +131,7 @@ function draw() {
     drawIndex++;
     if (drawIndex === lineArray.length - 1) {
       treeDrawnFinished = true;
-      // console.log(treeDrawnFinished)
+      // console.log(treeDrawnFinished);
     }
   }
 
@@ -218,11 +219,11 @@ function drawRandomLine() {
   b += random(-10, 10);
 
   // Constrain color values
-  g = constrain(g, 0, 255);
+  g = constrain(g, 0, 200);
   b = constrain(b, 0, 255);
 
   //set the Attribute of the another layer
-  bgLayer.stroke(r, g, b);
+  bgLayer.stroke(r, g, b, 80);
   bgLayer.strokeWeight(1);
   bgLayer.line(xPos, yPos, nextX, nextY);
 
