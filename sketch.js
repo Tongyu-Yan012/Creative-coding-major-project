@@ -40,6 +40,11 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
+// branch growth animation
+let growth = 0;
+const growSpeed = 0.1;
+let applePoints = [];
+
 // Declare global variables for x and y coordinates
 let xPos;
 let yPos;
@@ -90,6 +95,15 @@ function setup() {
   addLineAndBallToArray();
 
   // console.log(lineArray);
+
+  const lastIndex = lineArray.length - 1;
+  const endPoint = lineArray[lastIndex].p2;
+  applePoints.push({ x: endPoint.x, y: endPoint.y, segmentIndex: lastIndex });
+
+  //Pre-run background code, let the user open the HTML can see some background lines
+  for (let i = 0; i < 5000; i++) {
+    drawRandomLine();
+  }
 }
 
 function draw() {
@@ -112,13 +126,31 @@ function draw() {
   // Draw random line
   drawRandomLine();
 
-  for (let i = 0; i < semiCircleArray.length; i++) {
+  const brachNum = lineArray.length;
+  const now = floor(growth);
+  const t = growth - now;
+
+  for (let i = 0; i < now & i < brachNum; i++) {
+    lineArray[i].displaySegment(1);
     semiCircleArray[i].display();
   }
-
-  for (let i = 0; i < lineArray.length; i++) {
-    lineArray[i].display();
+  // branch growth
+  if (now < brachNum) {
+    lineArray[now].displaySegment(t);
   }
+
+  // apples
+  for (let i = 0; i < applePoints.length; i++) {
+    let point = applePoints[i];
+    if (growth >= point.segmentIndex) {
+      fill(255, 0, 0);
+      noStroke();    
+      circle(point.x, point.y, 12); 
+    }
+  }
+
+  // growth speed
+  if (growth < brachNum) growth += growSpeed;  
 
   pop();
 }
@@ -171,11 +203,11 @@ function drawRandomLine() {
   b += random(-10, 10);
 
   // Constrain color values
-  g = constrain(g, 0, 255);
+  g = constrain(g, 0, 200);
   b = constrain(b, 0, 255);
 
   //set the Attribute of the another layer
-  bgLayer.stroke(r, g, b);
+  bgLayer.stroke(r, g, b, 80);
   bgLayer.strokeWeight(1);
   bgLayer.line(xPos, yPos, nextX, nextY);
 
