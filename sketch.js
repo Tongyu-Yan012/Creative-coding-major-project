@@ -51,6 +51,9 @@ let yPos;
 // A variable to control the maximum line length
 let maxLineLength = 80;
 
+//To save the ball array position those have been down
+let hasDownBallNumArray = [];
+
 // Declare global variables for RGB colour values
 let r;
 let g;
@@ -142,7 +145,32 @@ function draw() {
     }
   }
 
+  for (let ball of semiCircleArray) {
+    if (ball.falling === true) {
+      ball.drop();
+    }
+  }
+
   pop();
+}
+
+//To trigge the ball down
+function keyPressed() {
+  if (hasDownBallNumArray.length !== semiCircleArray.length) {
+    if (key === "S" || key === "s") {
+      let randomNumber = 0;
+      while (true) {
+        randomNumber = floor(random() * semiCircleArray.length);
+        if (hasDownBallNumArray.includes(randomNumber)) {
+          continue;
+        } else {
+          hasDownBallNumArray.push(randomNumber);
+          break;
+        }
+      }
+      semiCircleArray[randomNumber].falling = true;
+    }
+  }
 }
 
 // Window resize event

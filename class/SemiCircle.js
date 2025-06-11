@@ -24,6 +24,16 @@ class SemiCircle {
     //https://p5js.org/reference/p5/atan2/
     this.angle = atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x);
     this.borderWeight = borderWeight;
+
+    // Drop Down attributes
+    this.falling = false;
+    this.hasDown = false;
+    this.velocity = 0;
+    this.gravity = 0.35;
+    this.boundness = 0.8;
+    this.groundY = 800;
+
+    this.minimumSpeed = 0.2;
   }
 
   display() {
@@ -62,5 +72,32 @@ class SemiCircle {
     }
     arc(0, 0, this.diameter, this.diameter, 0, PI, PIE);
     pop();
+  }
+
+  drop() {
+    // Not Falling not do anything
+    if (!this.falling) return;
+
+    // speed += gravity
+    this.velocity += this.gravity;
+
+    // ball move
+    this.cy += this.velocity;
+
+    //Test Whether touch the ground
+    if (this.cy + this.diameter / 2 >= this.groundY) {
+      //Touch the Ground
+      this.cy = this.groundY - this.diameter / 2;
+      //To make the speed smaller need to multiply, minus means go up
+      this.velocity *= -this.boundness;
+
+      //To test the velocity of the ball if the velocity is too small, the ball need to be stop insted of keep moving
+      if (abs(this.velocity) < this.minimumSpeed) {
+        this.velocity = 0;
+        this.cy = this.groundY - this.diameter / 2;
+        this.falling = false;
+        this.hasDown = true;
+      }
+    }
   }
 }
