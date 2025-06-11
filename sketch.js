@@ -40,7 +40,6 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
-//Tree grow animation
 let drawIndex = 0;
 let treeDrawnFinished = false;
 
@@ -126,20 +125,15 @@ function draw() {
 
   if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
     drawIndex++;
-    if (drawIndex === lineArray.length - 1) {
-      treeDrawnFinished = true;
+    if (drawIndex === lineArray.length-1){
+      treeDrawnFinished = true
+      console.log(treeDrawnFinished)
     }
   }
 
   for (let i = 0; i < drawIndex; i++) {
     lineArray[i].display();
     semiCircleArray[i].display();
-  }
-
-  for (let ball of semiCircleArray) {
-    if (ball.falling === true) {
-      ball.drop();
-    }
   }
 
   pop();
