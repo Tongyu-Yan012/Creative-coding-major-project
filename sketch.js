@@ -40,7 +40,9 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
+//Tree grow animation
 let drawIndex = 0;
+let treeDrawnFinished = false;
 
 // Declare global variables for x and y coordinates
 let xPos;
@@ -124,6 +126,9 @@ function draw() {
 
   if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
     drawIndex++;
+    if (drawIndex === lineArray.length - 1) {
+      treeDrawnFinished = true;
+    }
   }
 
   for (let i = 0; i < drawIndex; i++) {
@@ -136,7 +141,7 @@ function draw() {
       ball.drop();
     }
   }
-  
+
   pop();
 }
 
