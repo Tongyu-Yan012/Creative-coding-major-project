@@ -40,6 +40,10 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
+//tree animation attributes
+let drawIndex = 0;
+let treeDrawnFinished = false;
+
 // Declare global variables for x and y coordinates
 let xPos;
 let yPos;
@@ -93,6 +97,11 @@ function setup() {
   addLineAndBallToArray();
 
   // console.log(lineArray);
+
+  //Pre-run background code, let the user open the HTML can see some background linesAdd commentMore actions
+  for (let i = 0; i < 5000; i++) {
+    drawRandomLine();
+  }
 }
 
 function draw() {
@@ -113,14 +122,21 @@ function draw() {
   scale(imgDrwPrps.width / canvasWidth, imgDrwPrps.height / canvasHeight);
 
   // Draw random line
-  drawRandomLine();
-
-  for (let i = 0; i < semiCircleArray.length; i++) {
-    semiCircleArray[i].display();
+  for (let i = 0; i < 8; i++) {
+    drawRandomLine();
   }
 
-  for (let i = 0; i < lineArray.length; i++) {
+  if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
+    drawIndex++;
+    if (drawIndex === lineArray.length - 1) {
+      treeDrawnFinished = true;
+      // console.log(treeDrawnFinished)
+    }
+  }
+
+  for (let i = 0; i < drawIndex; i++) {
     lineArray[i].display();
+    semiCircleArray[i].display();
   }
 
   for (let ball of semiCircleArray) {
@@ -134,7 +150,10 @@ function draw() {
 
 //To trigge the ball down
 function keyPressed() {
-  if (hasDownBallNumArray.length !== semiCircleArray.length) {
+  if (
+    hasDownBallNumArray.length !== semiCircleArray.length &&
+    treeDrawnFinished
+  ) {
     if (key === "S" || key === "s") {
       let randomNumber = 0;
       while (true) {
