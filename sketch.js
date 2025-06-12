@@ -40,19 +40,12 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
-//Tree grow animation
-let drawIndex = 0;
-let treeDrawnFinished = false;
-
 // Declare global variables for x and y coordinates
 let xPos;
 let yPos;
 
 // A variable to control the maximum line length
 let maxLineLength = 80;
-
-//To save the ball array position those have been down
-let hasDownBallNumArray = [];
 
 // Declare global variables for RGB colour values
 let r;
@@ -64,6 +57,17 @@ let imgDrwPrps = { aspect: 0, width: 0, height: 0, xOffset: 0, yOffset: 0 };
 let canvasAspectRatio = 0;
 const canvasWidth = 600;
 const canvasHeight = 800;
+
+// Blink period (milliseconds)
+// The period for the blinking effect in milliseconds
+const blinkPeriod = 5000;
+
+// Overall vertical movement animation variables
+// Variables for the overall vertical movement animation
+let verticalOffset = 0;
+let offsetDirection = 1;
+const maxOffset = 150;
+const moveSpeed = 10;
 
 function setup() {
   // Create canvas that fills the browser window
@@ -97,15 +101,25 @@ function setup() {
   addLineAndBallToArray();
 
   // console.log(lineArray);
-
-  //Pre-run background code, let the user open the HTML can see some background lines
-  for (let i = 0; i < 5000; i++) {
-    drawRandomLine();
-  }
 }
 
 function draw() {
   background(255);
+
+  // Calculate transparency for blinking effect using sine wave
+  // TWO_PI：2π for representing a full sine wave cycle
+  // time: Milliseconds since program start (from millis())
+  // blinkPeriod: Full blink cycle duration
+  // The map() function ​​rescales a sine wave output between [-1, 1] transforms to the ​​[0, 255]​​ range
+  let time = millis();
+  let alpha = map(sin(TWO_PI * time / blinkPeriod), -1, 1, 0, 255);
+
+  // Apply transparency to the background layer
+  bgLayer.loadPixels();
+  for (let i = 0; i < bgLayer.pixels.length; i += 4) {
+    bgLayer.pixels[i + 3] = alpha;
+  }
+  bgLayer.updatePixels();
 
   //Put another layer as a background image
   image(
@@ -122,55 +136,30 @@ function draw() {
   scale(imgDrwPrps.width / canvasWidth, imgDrwPrps.height / canvasHeight);
 
   // Draw random line
-  //Drawing more lines at the same time without changing the transparency of the background lines allows the density of the lines in the background to increase faster.
-  for (let i = 0; i < 8; i++) {
-    drawRandomLine();
+  drawRandomLine();
+
+  // Update vertical movement
+  verticalOffset += offsetDirection * moveSpeed;
+  if (verticalOffset >= maxOffset || verticalOffset <= -maxOffset) {
+    offsetDirection *= -1;
   }
 
-  if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
-    drawIndex++;
-    if (drawIndex === lineArray.length - 1) {
-      treeDrawnFinished = true;
-    }
-  }
+  // Apply vertical movement transformation
+  push();
+  translate(0, verticalOffset);
 
-  for (let i = 0; i < drawIndex; i++) {
-    lineArray[i].display();
+  // Draw all semi-circles and lines
+  for (let i = 0; i < semiCircleArray.length; i++) {
     semiCircleArray[i].display();
   }
 
-  for (let ball of semiCircleArray) {
-    if (ball.falling === true) {
-      ball.drop();
-    }
+  for (let i = 0; i < lineArray.length; i++) {
+    lineArray[i].display();
   }
 
-  for (let ball of semiCircleArray) {
-    if (ball.falling === true) {
-      ball.drop();
-    }
-  }
+  pop(); // The transformation that ends the overall movement
+  pop(); // End the overall transformation
 
-  pop();
-}
-
-//To trigge the ball down
-function keyPressed() {
-  if (hasDownBallNumArray.length !== semiCircleArray.length) {
-    if (key === "S" || key === "s") {
-      let randomNumber = 0;
-      while (true) {
-        randomNumber = floor(random() * semiCircleArray.length);
-        if (hasDownBallNumArray.includes(randomNumber)) {
-          continue;
-        } else {
-          hasDownBallNumArray.push(randomNumber);
-          break;
-        }
-      }
-      semiCircleArray[randomNumber].falling = true;
-    }
-  }
 }
 
 // Window resize event
@@ -221,11 +210,11 @@ function drawRandomLine() {
   b += random(-10, 10);
 
   // Constrain color values
-  g = constrain(g, 0, 200);
+  g = constrain(g, 0, 255);
   b = constrain(b, 0, 255);
 
   //set the Attribute of the another layer
-  bgLayer.stroke(r, g, b, 80);
+  bgLayer.stroke(r, g, b);
   bgLayer.strokeWeight(1);
   bgLayer.line(xPos, yPos, nextX, nextY);
 
@@ -299,7 +288,7 @@ function setThePoint(firstStartPointOfTheGround) {
     rightBranch[i + 1] = newPointOfTheRightBranch;
   }
 
-  rightUpBranch[0] = rightBranch[leftBranch.length - 1];
+  rightUpBranch[0] = rightBranch[rightBranch.length - 1];
 
   // Right Up Branch Point
   for (let i = 0; i < 4; i++) {
@@ -498,4 +487,136 @@ function getRandomValueUsePerlin(
   let offset = ceil(map(n, 0, 1, min, max) * value);
 
   return offset;
+}
+
+  // Animate right arm
+  for (let i = 0; i < rightUpBranch.length; i++) {
+    // Save original Y position if not already saved
+    if (!rightUpBranch[i].originalY) {
+      rightUpBranch[i].originalY = rightUpBranch[i].y;
+    }
+    // Apply cosine wave animation to Y position (out of phase with left arm)
+    rightUpBranch[i].y = rightUpBranch[i].originalY + cos(angle) * 80;
+  }
+
+
+/**
+ * Updates the semi-circle and line objects based on current point positions.
+ * This function is called whenever the positions of the structure's points change,
+ * such as during animations or after transformations.
+ *
+ * Process:
+ * 1. Clears existing line and semi-circle arrays
+ * 2. Re-creates line and semi-circle objects for each segment of the structure
+ * 3. Saves the new positions as original positions for future animations
+ *
+ * This ensures that all visual elements accurately reflect the current state of the structure.
+ */
+function updateSemiCirclesAndLines() {
+  // Clear existing arrays to prepare for re-creation of visual elements
+  semiCircleArray = [];
+  lineArray = [];
+
+  // Re-create line and semi-circle objects for each structural segment
+  // Ground segment
+  for (let i = 0; i < groundPointArray.length - 1; i++) {
+    lineArray.push(
+      new Branch(groundPointArray[i], groundPointArray[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(groundPointArray[i], groundPointArray[i + 1], i)
+    );
+  }
+
+  // Main vertical branch
+  for (let i = 0; i < firstBranchArray.length - 1; i++) {
+    lineArray.push(
+      new Branch(firstBranchArray[i], firstBranchArray[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(firstBranchArray[i], firstBranchArray[i + 1], i)
+    );
+  }
+
+  // Left arm branches
+  for (let i = 0; i < leftBranch.length - 1; i++) {
+    lineArray.push(new Branch(leftBranch[i], leftBranch[i + 1], `yellow`, 1));
+    semiCircleArray.push(new SemiCircle(leftBranch[i], leftBranch[i + 1], i));
+  }
+
+  for (let i = 0; i < leftUpBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(leftUpBranch[i], leftUpBranch[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(leftUpBranch[i], leftUpBranch[i + 1], i)
+    );
+  }
+
+  // Right arm branches
+  for (let i = 0; i < rightBranch.length - 1; i++) {
+    lineArray.push(new Branch(rightBranch[i], rightBranch[i + 1], `yellow`, 1));
+    semiCircleArray.push(new SemiCircle(rightBranch[i], rightBranch[i + 1], i));
+  }
+
+  for (let i = 0; i < rightUpBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(rightUpBranch[i], rightUpBranch[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(rightUpBranch[i], rightUpBranch[i + 1], i)
+    );
+  }
+
+  // Upper body branches
+  for (let i = 0; i < secondUpBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(secondUpBranch[i], secondUpBranch[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(secondUpBranch[i], secondUpBranch[i + 1], i)
+    );
+  }
+
+  // Secondary left branches
+  for (let i = 0; i < secondleftBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(secondleftBranch[i], secondleftBranch[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(secondleftBranch[i], secondleftBranch[i + 1], i)
+    );
+  }
+
+  for (let i = 0; i < secondleftUpBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(secondleftUpBranch[i], secondleftUpBranch[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(secondleftUpBranch[i], secondleftUpBranch[i + 1], i)
+    );
+  }
+
+  for (let i = 0; i < secondRightBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(secondRightBranch[i], secondRightBranch[i + 1], `yellow`, 1)
+    );
+    semiCircleArray.push(
+      new SemiCircle(secondRightBranch[i], secondRightBranch[i + 1], i)
+    );
+  }
+
+  for (let i = 0; i < secondRightUpBranch.length - 1; i++) {
+    lineArray.push(
+      new Branch(
+        secondRightUpBranch[i],
+        secondRightUpBranch[i + 1],
+        `yellow`,
+        1
+      )
+    );
+    semiCircleArray.push(
+      new SemiCircle(secondRightUpBranch[i], secondRightUpBranch[i + 1], i)
+    );
+  }
 }
