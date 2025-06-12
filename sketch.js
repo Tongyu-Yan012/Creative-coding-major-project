@@ -1,88 +1,70 @@
-// Another layer for background
 let bgLayer;
 
-// ground Array
+// Variables of Music
+let music;
+let amplitude;
+let isPlaying = false;
+
 let groundPointArray = [];
 
-// The first branch Arrary
 let firstBranchArray = [];
 
-// The first left Branch
 let leftBranch = [];
 
-// The left up branch
 let leftUpBranch = [];
 
-// The first right Branch
 let rightBranch = [];
 
-// The right up Branch
 let rightUpBranch = [];
 
-// The second up branch Array
 let secondUpBranch = [];
 
-// The second left branch
 let secondleftBranch = [];
 
-// The second left Up branch
 let secondleftUpBranch = [];
 
-// The second Right Branch
 let secondRightBranch = [];
 
-// The second Right Up Branch
 let secondRightUpBranch = [];
 
-// The Array of Line
 let lineArray = [];
 
-// The Array of SemiCircle
 let semiCircleArray = [];
 
-let drawIndex = 0;
-let treeDrawnFinished = false;
-
-// Declare global variables for x and y coordinates
 let xPos;
 let yPos;
 
-// A variable to control the maximum line length
 let maxLineLength = 80;
 
-// Declare global variables for RGB colour values
 let r;
 let g;
 let b;
 
-//An object to hold the draw properties of the artwork
 let imgDrwPrps = { aspect: 0, width: 0, height: 0, xOffset: 0, yOffset: 0 };
 let canvasAspectRatio = 0;
 const canvasWidth = 600;
 const canvasHeight = 800;
 
 function setup() {
-  // Create canvas that fills the browser window
   createCanvas(windowWidth, windowHeight);
 
-  /**
-   * When try to animate the ball and the line, if we want to refresh the background, the random line will be refreshed too
-   * Inspired By https://editor.p5js.org/LuqianChen/sketches/rkTNtCE_l
-   * We put the random line in another layer
-   */
   bgLayer = createGraphics(canvasWidth, canvasHeight);
-  bgLayer.background(255); // initial Background
+  bgLayer.background(255);
 
-  // Set aspect ratio of virtual canvas
+  // Set Audio Analysis
+  amplitude = new p5.Amplitude();
+  
+  // Add play button
+  let playButton = createButton('play/stop');
+  playButton.position(20, 20);
+  playButton.mousePressed(togglePlay);
+
   imgDrwPrps.aspect = canvasWidth / canvasHeight;
 
-  // Initial calculation of drawing properties
   calculateImageDrawProps();
 
-  // Initialize position at center of virtual canvas
   xPos = canvasWidth / 2;
   yPos = canvasHeight / 2;
-  // Initialize color values, Red is delete considering the background
   r = 0;
   g = random(255);
   b = random(255);
@@ -92,18 +74,15 @@ function setup() {
   setThePoint(firstStartPointOfTheGround);
   addLineAndBallToArray();
 
-  // console.log(lineArray);
-
-  //Pre-run background code, let the user open the HTML can see some background lines
   for (let i = 0; i < 5000; i++) {
     drawRandomLine();
   }
+
 }
 
 function draw() {
   background(255);
 
-  //Put another layer as a background image
   image(
     bgLayer,
     imgDrwPrps.xOffset,
@@ -112,59 +91,59 @@ function draw() {
     imgDrwPrps.height
   );
 
-  // Apply transformations
+  // Obtain audio analysis data
+  let level = amplitude.getLevel();
+  let musicMovement = map(level, 0, 1, 0.5, 2.5); // The zoom range is from 0.5 to 2.5.
+
   push();
   translate(imgDrwPrps.xOffset, imgDrwPrps.yOffset);
   scale(imgDrwPrps.width / canvasWidth, imgDrwPrps.height / canvasHeight);
 
-  // Draw random line
-  //Drawing more lines at the same time without changing the transparency of the background lines allows the density of the lines in the background to increase faster.
   for (let i = 0; i < 8; i++) {
-    drawRandomLine();
+    drawRandomLine(); // Draw multiple lines per frame to accelerate density accumulation
   }
 
-  if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
-    drawIndex++;
-    if (drawIndex === lineArray.length-1){
-      treeDrawnFinished = true
-      console.log(treeDrawnFinished)
+  // Randomly scale circles based on music amplitude
+  for (let i = 0; i < semiCircleArray.length; i++) {
+    if (isPlaying) {
+      // Randomly decide whether to scale this circle to create a random effect
+      if (random() < 0.05) { // 5% chance to change scale
+        //Scale based on the music amplitude with some randomness added
+        let scaleFactor = musicMovement * random(0.8, 1.2);
+        semiCircleArray[i].updateScale(scaleFactor);
+      }
     }
+    semiCircleArray[i].display();
   }
 
-  for (let i = 0; i < drawIndex; i++) {
+  for (let i = 0; i < lineArray.length; i++) {
     lineArray[i].display();
-    semiCircleArray[i].display();
   }
 
   pop();
 }
 
-// Window resize event
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 
   calculateImageDrawProps();
 }
 
-// Calculate the canvas aspect ratio
 function calculateImageDrawProps() {
   const canvasAspectRatio = width / height;
 
-  // If virtual aspect > canvas aspect (landscape screens)
   if (imgDrwPrps.aspect > canvasAspectRatio) {
     imgDrwPrps.width = width;
     imgDrwPrps.height = width / imgDrwPrps.aspect;
     imgDrwPrps.yOffset = (height - imgDrwPrps.height) / 2;
     imgDrwPrps.xOffset = 0;
   }
-  // If virtual aspect < canvas aspect (portrait screens)
   else if (imgDrwPrps.aspect < canvasAspectRatio) {
     imgDrwPrps.height = height;
     imgDrwPrps.width = height * imgDrwPrps.aspect;
     imgDrwPrps.xOffset = (width - imgDrwPrps.width) / 2;
     imgDrwPrps.yOffset = 0;
   }
-  // If aspects are equal
   else {
     imgDrwPrps.width = width;
     imgDrwPrps.height = height;
@@ -173,43 +152,33 @@ function calculateImageDrawProps() {
   }
 }
 
-//Draw a random line
 function drawRandomLine() {
   push();
   let nextX = xPos + random(-maxLineLength, maxLineLength);
   let nextY = yPos + random(-maxLineLength, maxLineLength);
 
-  // Constrain within virtual canvas bounds
   nextX = constrain(nextX, 0, canvasWidth);
   nextY = constrain(nextY, 0, canvasHeight);
 
   g += random(-10, 10);
   b += random(-10, 10);
 
-  // Constrain color values
   g = constrain(g, 0, 200);
   b = constrain(b, 0, 255);
 
-  //set the Attribute of the another layer
   bgLayer.stroke(r, g, b, 80);
   bgLayer.strokeWeight(1);
   bgLayer.line(xPos, yPos, nextX, nextY);
 
-  // Update current position
   xPos = nextX;
   yPos = nextY;
   pop();
 }
 
-/**
- *
- * @param {Point} firstStartPointOfTheGround
- * Base on the firstStartPointOfTheGround and use the array.length to calculate all the cross point and set point array
- */
+
 function setThePoint(firstStartPointOfTheGround) {
   groundPointArray[0] = firstStartPointOfTheGround;
 
-  //Ground Point
   for (let i = 0; i < 4; i++) {
     let newPointOfTheGround = new Point(
       groundPointArray[i].x + getRandomValueUsePerlin(30, 50, 1),
@@ -222,7 +191,6 @@ function setThePoint(firstStartPointOfTheGround) {
     groundPointArray[floor(groundPointArray.length / 2)];
   firstBranchArray[0] = theMiddlePointOfTheGround;
 
-  //First Branch Point
   for (let i = 0; i < 5; i++) {
     let newPointOfTheFirstBranch = new Point(
       firstBranchArray[i].x + getRandomValueUsePerlin(1, 5),
@@ -236,7 +204,6 @@ function setThePoint(firstStartPointOfTheGround) {
   rightBranch[0] = theFirstCrossPoint;
   secondUpBranch[0] = theFirstCrossPoint;
 
-  // Left Branch Point
   for (let i = 0; i < 4; i++) {
     let newPointOfTheLeftBranch = new Point(
       leftBranch[i].x + getRandomValueUsePerlin(30, 50, -1),
@@ -247,7 +214,6 @@ function setThePoint(firstStartPointOfTheGround) {
 
   leftUpBranch[0] = leftBranch[leftBranch.length - 1];
 
-  // Left Up Branch Point
   for (let i = 0; i < 4; i++) {
     let newPointOfTheLeftUpBranch = new Point(
       leftUpBranch[i].x + getRandomValueUsePerlin(1, 5),
@@ -256,7 +222,6 @@ function setThePoint(firstStartPointOfTheGround) {
     leftUpBranch[i + 1] = newPointOfTheLeftUpBranch;
   }
 
-  // Right Branch Point
   for (let i = 0; i < 4; i++) {
     let newPointOfTheRightBranch = new Point(
       rightBranch[i].x + getRandomValueUsePerlin(20, 50, 1),
@@ -265,9 +230,8 @@ function setThePoint(firstStartPointOfTheGround) {
     rightBranch[i + 1] = newPointOfTheRightBranch;
   }
 
-  rightUpBranch[0] = rightBranch[leftBranch.length - 1];
+  rightUpBranch[0] = rightBranch[rightBranch.length - 1];
 
-  // Right Up Branch Point
   for (let i = 0; i < 4; i++) {
     let newPointOfTheRightUpBranch = new Point(
       rightUpBranch[i].x + getRandomValueUsePerlin(1, 5),
@@ -276,7 +240,6 @@ function setThePoint(firstStartPointOfTheGround) {
     rightUpBranch[i + 1] = newPointOfTheRightUpBranch;
   }
 
-  //Second Branch Point
   for (let i = 0; i < 2; i++) {
     let newPointOfTheSecondBranch = new Point(
       secondUpBranch[i].x + getRandomValueUsePerlin(1, 5),
@@ -289,7 +252,6 @@ function setThePoint(firstStartPointOfTheGround) {
   secondleftBranch[0] = theSecondCrossPoint;
   secondRightBranch[0] = theSecondCrossPoint;
 
-  //SecondLeftBranch
   for (let i = 0; i < 2; i++) {
     let basePoint = secondleftBranch[i];
     let newPointOfTheSecondLeft = new Point(
@@ -301,7 +263,6 @@ function setThePoint(firstStartPointOfTheGround) {
 
   secondleftUpBranch[0] = secondleftBranch[secondleftBranch.length - 1];
 
-  //Second Left Up Branch Point
   for (let i = 0; i < 2; i++) {
     let newPointOfTheSecondLeftUpBranch = new Point(
       secondleftUpBranch[i].x + getRandomValueUsePerlin(1, 5),
@@ -310,7 +271,6 @@ function setThePoint(firstStartPointOfTheGround) {
     secondleftUpBranch[i + 1] = newPointOfTheSecondLeftUpBranch;
   }
 
-  //secondRightBranch
   for (let i = 0; i < 2; i++) {
     let basePoint = secondRightBranch[i];
     let newPointOfTheSecondRight = new Point(
@@ -322,7 +282,6 @@ function setThePoint(firstStartPointOfTheGround) {
 
   secondRightUpBranch[0] = secondRightBranch[secondRightBranch.length - 1];
 
-  //Second Right Up Branch Point
   for (let i = 0; i < 2; i++) {
     let newPointOfTheSecondRightUpBranch = new Point(
       secondRightUpBranch[i].x + getRandomValueUsePerlin(1, 5),
@@ -332,13 +291,9 @@ function setThePoint(firstStartPointOfTheGround) {
   }
 }
 
-/**
- * After all the point array have been set
- * Use this function to create all the line and semicircle
- */
+
 function addLineAndBallToArray() {
   for (let i = 0; i < groundPointArray.length - 1; i++) {
-    // groundPointArray[i].display();
     lineArray.push(
       new Branch(groundPointArray[i], groundPointArray[i + 1], `yellow`, 1)
     );
@@ -348,7 +303,6 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < firstBranchArray.length - 1; i++) {
-    // firstBranchArray[i].display();
     lineArray.push(
       new Branch(firstBranchArray[i], firstBranchArray[i + 1], `yellow`, 1)
     );
@@ -358,13 +312,11 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < leftBranch.length - 1; i++) {
-    // leftBranch[i].display();
     lineArray.push(new Branch(leftBranch[i], leftBranch[i + 1], `yellow`, 1));
     semiCircleArray.push(new SemiCircle(leftBranch[i], leftBranch[i + 1], i));
   }
 
   for (let i = 0; i < leftUpBranch.length - 1; i++) {
-    // leftUpBranch[i].display();
     lineArray.push(
       new Branch(leftUpBranch[i], leftUpBranch[i + 1], `yellow`, 1)
     );
@@ -374,12 +326,10 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < rightBranch.length - 1; i++) {
-    // rightBranch[i].display();
     lineArray.push(new Branch(rightBranch[i], rightBranch[i + 1], `yellow`, 1));
     semiCircleArray.push(new SemiCircle(rightBranch[i], rightBranch[i + 1], i));
   }
   for (let i = 0; i < rightUpBranch.length - 1; i++) {
-    // rightUpBranch[i].display();
     lineArray.push(
       new Branch(rightUpBranch[i], rightUpBranch[i + 1], `yellow`, 1)
     );
@@ -389,7 +339,6 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < secondUpBranch.length - 1; i++) {
-    // secondUpBranch[i].display();
     lineArray.push(
       new Branch(secondUpBranch[i], secondUpBranch[i + 1], `yellow`, 1)
     );
@@ -399,7 +348,6 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < secondleftBranch.length - 1; i++) {
-    // secondleftBranch[i].display();
     lineArray.push(
       new Branch(secondleftBranch[i], secondleftBranch[i + 1], `yellow`, 1)
     );
@@ -409,7 +357,6 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < secondleftUpBranch.length - 1; i++) {
-    // secondleftUpBranch[i].display();
     lineArray.push(
       new Branch(secondleftUpBranch[i], secondleftUpBranch[i + 1], `yellow`, 1)
     );
@@ -419,7 +366,6 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < secondRightBranch.length - 1; i++) {
-    // secondRightBranch[i].display();
     lineArray.push(
       new Branch(secondRightBranch[i], secondRightBranch[i + 1], `yellow`, 1)
     );
@@ -429,7 +375,6 @@ function addLineAndBallToArray() {
   }
 
   for (let i = 0; i < secondRightUpBranch.length - 1; i++) {
-    // secondRightUpBranch[i].display();
     lineArray.push(
       new Branch(
         secondRightUpBranch[i],
@@ -444,16 +389,6 @@ function addLineAndBallToArray() {
   }
 }
 
-/**
- *
- * @param {Number} min
- * @param {Number} max min, max are use to control the scale of return values
- * @param {Number} NegativeAndPositiveNum
- * NegativeAndPositiveNum param are use to control return a positive number or a negative number
- * if the param > 0.5 this function will return positive number
- * if the param < 0.5 this function will return negative number
- * @returns
- */
 function getRandomValueUsePerlin(
   min = 0,
   max = 20,
@@ -464,4 +399,30 @@ function getRandomValueUsePerlin(
   let offset = ceil(map(n, 0, 1, min, max) * value);
 
   return offset;
+}
+
+function preload() {
+  soundFormats('mp3');
+  music = loadSound('Malte Marten - Reflections (1111 Hz).mp3');
+}
+
+// Function to play/pause music
+function togglePlay() {
+  if (isPlaying) {
+    music.pause();
+    isPlaying = false;
+  } else {
+    music.loop();
+    isPlaying = true;
+  }
+}
+
+// Keyboard function rework
+function keyPressed() {
+  if (key === 'r' || key === 'R') {
+    // Reset all circles
+    for (let i = 0; i < semiCircleArray.length; i++) {
+      semiCircleArray[i].reset();
+    }
+  }
 }
