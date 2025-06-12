@@ -1,9 +1,4 @@
 class SemiCircle {
-  //https://editor.p5js.org/aartsyfaartsy/sketches/Go8edGRsZ
-  /**
-   * The parameter need you input the point1 and the point2
-   * Also you can input the color1, color2 and borderWeight
-   * **/
   constructor(
     p1,
     p2,
@@ -21,9 +16,17 @@ class SemiCircle {
     this.cy = (this.p1.y + this.p2.y) / 2;
     //https://p5js.org/reference/p5/dist/
     this.diameter = dist(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
+    this.originalDiameter = this.diameter; // Save original diameter
     //https://p5js.org/reference/p5/atan2/
     this.angle = atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x);
     this.borderWeight = borderWeight;
+    
+    // Store the original position for resetting
+    this.originalCx = this.cx;
+    this.originalCy = this.cy;
+    
+    // Scaling factor
+    this.scaleFactor = 1.0;
   }
 
   display() {
@@ -31,12 +34,15 @@ class SemiCircle {
     translate(this.cx, this.cy);
     rotate(this.angle);
 
+    // Apply scaling factor
+    let currentDiameter = this.diameter * this.scaleFactor;
+
     //Outline
     noFill();
     stroke(0, 1, 0, 10);
     strokeWeight(this.borderWeight);
     // https://p5js.org/reference/p5/arc/
-    arc(0, 0, this.diameter, this.diameter, PI, 0, PIE);
+    arc(0, 0, currentDiameter, currentDiameter, PI, 0, PIE);
 
     // Half Circle
     noStroke();
@@ -45,13 +51,13 @@ class SemiCircle {
     } else {
       fill(...this.color2);
     }
-    arc(0, 0, this.diameter, this.diameter, PI, 0, PIE);
+    arc(0, 0, currentDiameter, currentDiameter, PI, 0, PIE);
 
     //Second Outline
     noFill();
     stroke(0, 1, 0, 10);
     strokeWeight(this.borderWeight);
-    arc(0, 0, this.diameter, this.diameter, 0, PI, PIE);
+    arc(0, 0, currentDiameter, currentDiameter, 0, PI, PIE);
 
     //Second Half Circle
     noStroke();
@@ -60,7 +66,19 @@ class SemiCircle {
     } else {
       fill(...this.color1);
     }
-    arc(0, 0, this.diameter, this.diameter, 0, PI, PIE);
+    arc(0, 0, currentDiameter, currentDiameter, 0, PI, PIE);
     pop();
+  }
+  
+  // Update scaling factor
+  updateScale(factor) {
+    this.scaleFactor = factor;
+  }
+  
+  // Reset position and size
+  reset() {
+    this.cx = this.originalCx;
+    this.cy = this.originalCy;
+    this.scaleFactor = 1.0;
   }
 }
