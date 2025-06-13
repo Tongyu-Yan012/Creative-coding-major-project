@@ -16,8 +16,8 @@ Effect Description: The whole structure will move vertically up and down, making
 
    ### - Other group members' animation:
    ### a). Press 'S' and a random apple will fall
-   ### b).Clicking the play/pause button controls the music. When playing, the circle representing the apple dynamically scales up and down based on the amplitude of the music. When paused, both the music and the movement of the apple-representing circle stop.
-   ### c).
+   ### b). Clicking the play/pause button controls the music. When playing, the circle representing the apple dynamically scales up and down based on the amplitude of the music. When paused, both the music and the movement of the apple-representing circle stop.
+   ### c). After the apple tree finishes growing, Perlin noise is applied to the apple positions to create a subtle jittering effect.
  
 ### How it is unique from other group members:
  Other three group members all focus on the interaction and animation about the apple, my part choose the background and the whole tree. In my part, the transparency of the background layer changes periodically, creating a blinking effect. The sinusoidal flickering changes in black and white, combined with the bright and intermittently visible dynamic background lines, are extremely aesthetically pleasing. The whole structure will move vertically up and down, making regular roundtrips.
