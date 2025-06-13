@@ -66,9 +66,3 @@ Reference Links:
 [Link Text](https://openprocessing.org/sketch/216075)
 
 [Link Text](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations)
-
-
-
-![An image of firework](https://www.w3cschool.cn/article/30131241.html#&gid=1&pid=1).
-If effects can be made sound cause the fireworks blow on the scream will be fun. 
-
