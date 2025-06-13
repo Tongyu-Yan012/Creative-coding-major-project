@@ -40,7 +40,6 @@ let lineArray = [];
 // The Array of SemiCircle
 let semiCircleArray = [];
 
-//Tree grow animation
 let drawIndex = 0;
 let treeDrawnFinished = false;
 
@@ -126,20 +125,15 @@ function draw() {
 
   if (frameCount % 10 === 0 && drawIndex < lineArray.length) {
     drawIndex++;
-    if (drawIndex === lineArray.length - 1) {
-      treeDrawnFinished = true;
+    if (drawIndex === lineArray.length-1){
+      treeDrawnFinished = true
+      console.log(treeDrawnFinished)
     }
   }
 
   for (let i = 0; i < drawIndex; i++) {
-    lineArray[i].display();
     semiCircleArray[i].display();
-  }
-
-  for (let ball of semiCircleArray) {
-    if (ball.falling === true) {
-      ball.drop();
-    }
+    lineArray[i].display();
   }
 
   pop();
@@ -346,7 +340,7 @@ function addLineAndBallToArray() {
   for (let i = 0; i < groundPointArray.length - 1; i++) {
     // groundPointArray[i].display();
     lineArray.push(
-      new Branch(groundPointArray[i], groundPointArray[i + 1], `yellow`, 1)
+      new Branch(groundPointArray[i], groundPointArray[i + 1], `yellow`, 5)
     );
     semiCircleArray.push(
       new SemiCircle(groundPointArray[i], groundPointArray[i + 1], i)
@@ -356,7 +350,7 @@ function addLineAndBallToArray() {
   for (let i = 0; i < firstBranchArray.length - 1; i++) {
     // firstBranchArray[i].display();
     lineArray.push(
-      new Branch(firstBranchArray[i], firstBranchArray[i + 1], `yellow`, 1)
+      new Branch(firstBranchArray[i], firstBranchArray[i + 1], `yellow`, 5)
     );
     semiCircleArray.push(
       new SemiCircle(firstBranchArray[i], firstBranchArray[i + 1], i)
@@ -365,14 +359,14 @@ function addLineAndBallToArray() {
 
   for (let i = 0; i < leftBranch.length - 1; i++) {
     // leftBranch[i].display();
-    lineArray.push(new Branch(leftBranch[i], leftBranch[i + 1], `yellow`, 1));
+    lineArray.push(new Branch(leftBranch[i], leftBranch[i + 1], `yellow`, 3));
     semiCircleArray.push(new SemiCircle(leftBranch[i], leftBranch[i + 1], i));
   }
 
   for (let i = 0; i < leftUpBranch.length - 1; i++) {
     // leftUpBranch[i].display();
     lineArray.push(
-      new Branch(leftUpBranch[i], leftUpBranch[i + 1], `yellow`, 1)
+      new Branch(leftUpBranch[i], leftUpBranch[i + 1], `yellow`, 3)
     );
     semiCircleArray.push(
       new SemiCircle(leftUpBranch[i], leftUpBranch[i + 1], i)
@@ -381,13 +375,13 @@ function addLineAndBallToArray() {
 
   for (let i = 0; i < rightBranch.length - 1; i++) {
     // rightBranch[i].display();
-    lineArray.push(new Branch(rightBranch[i], rightBranch[i + 1], `yellow`, 1));
+    lineArray.push(new Branch(rightBranch[i], rightBranch[i + 1], `yellow`, 3));
     semiCircleArray.push(new SemiCircle(rightBranch[i], rightBranch[i + 1], i));
   }
   for (let i = 0; i < rightUpBranch.length - 1; i++) {
     // rightUpBranch[i].display();
     lineArray.push(
-      new Branch(rightUpBranch[i], rightUpBranch[i + 1], `yellow`, 1)
+      new Branch(rightUpBranch[i], rightUpBranch[i + 1], `yellow`, 2)
     );
     semiCircleArray.push(
       new SemiCircle(rightUpBranch[i], rightUpBranch[i + 1], i)
@@ -397,7 +391,7 @@ function addLineAndBallToArray() {
   for (let i = 0; i < secondUpBranch.length - 1; i++) {
     // secondUpBranch[i].display();
     lineArray.push(
-      new Branch(secondUpBranch[i], secondUpBranch[i + 1], `yellow`, 1)
+      new Branch(secondUpBranch[i], secondUpBranch[i + 1], `yellow`, 2)
     );
     semiCircleArray.push(
       new SemiCircle(secondUpBranch[i], secondUpBranch[i + 1], i)
@@ -407,7 +401,7 @@ function addLineAndBallToArray() {
   for (let i = 0; i < secondleftBranch.length - 1; i++) {
     // secondleftBranch[i].display();
     lineArray.push(
-      new Branch(secondleftBranch[i], secondleftBranch[i + 1], `yellow`, 1)
+      new Branch(secondleftBranch[i], secondleftBranch[i + 1], `yellow`, 2)
     );
     semiCircleArray.push(
       new SemiCircle(secondleftBranch[i], secondleftBranch[i + 1], i)
