@@ -11,18 +11,21 @@ class SemiCircle {
     this.color1 = color1;
     this.color2 = color2;
     this.borderWeight = borderWeight;
-    this.noiseScale = random(0.3, 0.7);
+    this.noiseScale = random(0.1, 0.3);
     this.noiseLocation = random(1000);
   }
 
   display() {
     let offsetX = 0;
     let offsetY = 0;
+    let angleOffset = (noise(this.noiseLocation + 200) - 0.5) * this.noiseScale * 2;
+    let scaleFactor = 1;
     if (treeDrawnFinished) {
       let xNoise = noise(this.noiseLocation);
-      let yNoise = noise(this.noiseLocation + 100);
+      let yNoise = noise(this.noiseLocation + 50);
       offsetX = (xNoise * 2 - 1) * this.noiseScale * 20;
       offsetY = (yNoise * 2 - 1) * this.noiseScale * 20;
+      scaleFactor = 1 + (noise(this.noiseLocation + 300) - 0.5) * this.noiseScale * 1.5;
       this.noiseLocation += 0.01;
     }
 
@@ -34,6 +37,11 @@ class SemiCircle {
     push();
     translate(cx, cy);
     rotate(angle);
+    push();
+    rotate(angleOffset); 
+    pop();
+    scale(scaleFactor, 1);
+   
 
     noFill();
     stroke(0, 1, 0, 10);
