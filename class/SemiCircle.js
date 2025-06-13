@@ -4,63 +4,62 @@ class SemiCircle {
    * The parameter need you input the point1 and the point2
    * Also you can input the color1, color2 and borderWeight
    * **/
-  constructor(
-    p1,
-    p2,
-    colorControlNum,
-    color1 = [122, 192, 142, 255],
-    color2 = [250, 88, 85, 255],
-    borderWeight = 2
-  ) {
+  constructor(p1, p2, colorControlNum, color1 = [122, 192, 142, 255], color2 = [250, 88, 85, 255], borderWeight = 2) {
     this.p1 = p1;
     this.p2 = p2;
     this.colorControlNum = colorControlNum;
     this.color1 = color1;
     this.color2 = color2;
-    this.cx = (this.p1.x + this.p2.x) / 2;
-    this.cy = (this.p1.y + this.p2.y) / 2;
-    //https://p5js.org/reference/p5/dist/
-    this.diameter = dist(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
-    //https://p5js.org/reference/p5/atan2/
-    this.angle = atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x);
     this.borderWeight = borderWeight;
+    this.falling = false;
+    this.speed = 0;
+    this.noiseScale = random(0.3, 0.7);
+    this.noiseLocation = random(1000);
   }
 
   display() {
+    let offsetX = 0;
+    let offsetY = 0;
+    if (treeDrawnFinished) {
+      let xNoise = noise(this.noiseLocation);
+      let yNoise = noise(this.noiseLocation + 100);
+      offsetX = (xNoise * 2 - 1) * this.noiseScale * 20;
+      offsetY = (yNoise * 2 - 1) * this.noiseScale * 20;
+      this.noiseLocation += 0.01;
+    }
+
+    let cx = (this.p1.x + this.p2.x) / 2 + offsetX;
+    let cy = (this.p1.y + this.p2.y) / 2 + offsetY;
+    let diameter = dist(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
+    let angle = atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x);
+
     push();
-    translate(this.cx, this.cy);
-    rotate(this.angle);
+    translate(cx, cy);
+    rotate(angle);
 
-    //Outline
     noFill();
     stroke(0, 1, 0, 10);
     strokeWeight(this.borderWeight);
-    // https://p5js.org/reference/p5/arc/
-    arc(0, 0, this.diameter, this.diameter, PI, 0, PIE);
+    arc(0, 0, diameter, diameter, PI, 0, PIE);
 
-    // Half Circle
     noStroke();
-    if (this.colorControlNum % 2 == 0) {
-      fill(...this.color1);
-    } else {
-      fill(...this.color2);
-    }
-    arc(0, 0, this.diameter, this.diameter, PI, 0, PIE);
+    fill(...(this.colorControlNum % 2 === 0 ? this.color1 : this.color2));
+    arc(0, 0, diameter, diameter, PI, 0, PIE);
 
-    //Second Outline
     noFill();
     stroke(0, 1, 0, 10);
     strokeWeight(this.borderWeight);
-    arc(0, 0, this.diameter, this.diameter, 0, PI, PIE);
+    arc(0, 0, diameter, diameter, 0, PI, PIE);
 
-    //Second Half Circle
     noStroke();
-    if (this.colorControlNum % 2 == 0) {
-      fill(...this.color2);
-    } else {
-      fill(...this.color1);
-    }
-    arc(0, 0, this.diameter, this.diameter, 0, PI, PIE);
+    fill(...(this.colorControlNum % 2 === 0 ? this.color2 : this.color1));
+    arc(0, 0, diameter, diameter, 0, PI, PIE);
     pop();
+  }
+
+  drop() {
+    this.speed += 0.2;
+    this.p1.y += this.speed;
+    this.p2.y += this.speed;
   }
 }
