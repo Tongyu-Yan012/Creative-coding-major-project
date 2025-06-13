@@ -55,7 +55,7 @@ function setup() {
   amplitude = new p5.Amplitude();
   
   // Add play button
-  let playButton = createButton('play/stop');
+  let playButton = createButton('play/pause');
   playButton.position(20, 20);
   playButton.mousePressed(togglePlay);
 
